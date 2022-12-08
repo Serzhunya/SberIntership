@@ -37,17 +37,22 @@ public class SupportingFunctions {
         cities.forEach(System.out::println);
     }
 
-    public static void sortingCitiesByName (List<City> cities) {
+    public static void sortingCitiesByNameV1 (List<City> cities) {
         Collections.sort(cities, new Comparator <City>() {
             @Override
             // функция сравнения без учета регистра
             public int compare(City o1, City o2) {
                 return o1.getName()
-                        .compareToIgnoreCase((o2).getName());
+                        .compareToIgnoreCase(o2.getName());
             }
         });
     }
-    public static void sortingCitiesByDistrict(List<City> cities) {
+
+    public static void sortingCitiesByNameV2 (List<City> cities) {
+        cities.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+    }
+
+    public static void sortingCitiesByDistrictAndName(List<City> cities) {
         // сортировка по федеральному округу
         Comparator<City> compareByDistrict = Comparator.comparing(City::getDistrict);
         // сортировка по названию города внутри федерального округа
