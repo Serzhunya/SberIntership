@@ -21,6 +21,10 @@ public class City {
         return district;
     }
 
+    public int getPopulation() {
+        return population;
+    }
+
     @Override
     public String toString() {
         return "City{" +

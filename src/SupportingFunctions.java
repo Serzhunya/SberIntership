@@ -1,8 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.MessageFormat;
 import java.util.*;
 
 public class SupportingFunctions {
+    /**
+     * Загрузка данных о городах в массив
+     *
+     * @return массив с данными о городах
+     */
     public static List<City> parseFile () {
         List<City> cities = new ArrayList<>();
         try {
@@ -16,7 +22,12 @@ public class SupportingFunctions {
         }
         return cities;
     }
-
+    /**
+     * Разбор строки с данными о городе
+     *
+     * @param line строка с данными
+     * @return класс City
+     */
     private static City parseLine(String line) { // парсер в строке
         Scanner scanner = new Scanner(line); // создаем поток строки
         scanner.useDelimiter(";"); // ";" разделитель в строке
@@ -33,10 +44,22 @@ public class SupportingFunctions {
         return new City(name, region, district, population, foundation);
     }
 
+    /**
+     * печать элементов cities
+     *
+     * @param {List<City> cities}
+     * @return класс City
+     */
     public static void print(List<City> cities) {
         cities.forEach(System.out::println);
     }
 
+    /**
+     * сортировка городов по имени
+     *
+     * @param {List<City> cities}
+     * @return класс City
+     */
     public static void sortingCitiesByNameV1 (List<City> cities) {
         Collections.sort(cities, new Comparator <City>() {
             @Override
@@ -48,6 +71,12 @@ public class SupportingFunctions {
         });
     }
 
+    /**
+     * сортировка городов по имени
+     *
+     * @param {List<City> cities}
+     * @return класс City
+     */
     public static void sortingCitiesByNameV2 (List<City> cities) {
         cities.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
     }
@@ -60,5 +89,25 @@ public class SupportingFunctions {
         // сортировка по федеральному округу и названию города внутри каждого федерального округа
         Comparator<City> compareFull = compareByDistrict.thenComparing(compareByName);
         Collections.sort(cities, compareFull);
+    }
+
+    public static City[] getArrayOfCity (List<City> cities) {
+        City[] arrayOfCities = new City[cities.size()];
+        for(int i = 0; i < cities.size(); i++) {
+            arrayOfCities[i] = cities.get(i);
+        }
+        return arrayOfCities;
+    }
+
+    public static void getCityWithMaxPopulation(City[] arrayOfCities) {
+        int maxPopulation = arrayOfCities[0].getPopulation();
+        int index = 0;
+        for(int i = 1; i < arrayOfCities.length; i++) {
+            if(maxPopulation <  arrayOfCities[i].getPopulation()) {
+                maxPopulation = arrayOfCities[i].getPopulation();
+                index = i;
+            }
+        }
+        System.out.println(MessageFormat.format("[{0}] = {1}", index, maxPopulation));
     }
 }
